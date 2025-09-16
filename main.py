@@ -1,7 +1,4 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-
-import carDoor
+from carDoor import carDoor
 
 
 def getData():
@@ -27,8 +24,12 @@ def getData():
 
 #defining the main function
 def main():
+
+    Scraper = carDoor()
+
     make, year = getData()
-    carDoor.openSite(carDoor.getUrl(make,year))
+    Scraper.getUrl(make,year)
+    Scraper.getCars()
 
 if __name__ == '__main__':
     main()
