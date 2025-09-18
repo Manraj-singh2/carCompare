@@ -1,4 +1,6 @@
-from carDoor import carDoor
+from carDoor import carDoor as cd
+from clutch import Clutch as cl
+import storeData as sd
 
 
 def getData():
@@ -25,11 +27,21 @@ def getData():
 #defining the main function
 def main():
 
-    Scraper = carDoor()
-
     make, year = getData()
-    Scraper.getUrl(make,year)
-    Scraper.getCars()
+
+    #getting Data from carDoor
+    carDoor = cd()
+    carDoor.getUrl(make,year)
+    carDoor.getCars()
+    sd.storeData(carDoor.carName,carDoor.carKms,carDoor.carLink,carDoor.carPrice,carDoor.carYear) #storing the data in csv
+
+    #getting Data from clutch
+    # clutch = cl()
+    # clutch.getUrl(make,year)
+    # clutch.getCars()
+    # print(clutch.carName)
+
+
 
 if __name__ == '__main__':
     main()

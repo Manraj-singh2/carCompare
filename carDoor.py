@@ -27,6 +27,7 @@ class carDoor(CarScraper,ABC):
         return self.url
         
 
+
     def getCars(self):
 
    
@@ -60,21 +61,4 @@ class carDoor(CarScraper,ABC):
                 self.carPrice.append(price.text)
 
             except:
-                # Alternative approach if the first one fails
-                self.carName.append("Data not available")
-
-
-        driver.quit()
-
-
-    
-
-
-
-    
-
-
-
-    
-
-
+                pass
