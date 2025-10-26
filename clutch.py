@@ -16,11 +16,11 @@ class Clutch(CarScraper,ABC):
     def getUrl(self,make = None,year=  None):
 
         if make and year:
-            self.url = f'https://www.cargurus.ca/Cars/inventorylisting/viewDetailsFilterViewInventoryListing.action'
+            self.url = f'https://www.clutch.ca/cars/{make}?yearLow=2015&yearHigh={year}'
         elif make:
-            self.url = f'https://www.clutch.ca/cars'
+            self.url = f'https://www.clutch.ca/cars/{make}'
         elif year:
-            self.url = f'https://www.clutch.ca/cars'
+            self.url = f'https://www.clutch.ca/cars?yearLow=2015&yearHigh={year}'
         else:
             self.url = 'https://www.clutch.ca/cars'
 
@@ -39,27 +39,38 @@ class Clutch(CarScraper,ABC):
         
 
         products = driver.find_elements(By.XPATH,'//div[contains(@class,"MuiStack-root")]')
+        
 
         for product in products:
-            try:
+            try:  
                 # Used dot to make it relative to the current product
 
                 #get the title
                 title = product.find_element(By.XPATH, './/h3[contains(@class,"MuiTypography-root")]')
-                self.carName.append(title.text)
+                
+                
+                #getLink of the car
+                link = product.find_element(By.XPATH, './/div[contains(@class, "product-title")]/a').get_attribute("href")
+                
 
-                # #getLink of the car
-                # link = product.find_element(By.XPATH, './/div[contains(@class, "product-title")]/a').get_attribute("href")
-                # self.carLink.append(link)
 
+                #get Kilometers
+                Kms = product.find_element(By.XPATH,'.//div[contains(@class, "product-description")]')
+                
 
-                # #get Kilometers
-                # Kms = product.find_element(By.XPATH,'.//div[contains(@class, "product-description")]')
-                # self.carKms.append(Kms.text.split("|")[1])
+                #get price
+                price = product.find_element(By.XPATH,'.//span[contains(@class,"actual-price")]')
+                
 
-                # #get price
-                # price = product.find_element(By.XPATH,'.//span[contains(@class,"actual-price")]')
-                # self.carPrice.append(price.text)
-
+                if title.text not in self.carName:
+                    title = title.text.split(' ')
+                    year = title[0]
+                    self.carName.append(" ".join(title[1:]))
+                    self.carYear.append(year)
+                    self.carLink.append(link)
+                    self.carKms.append(Kms.text.split("|")[1])
+                    self.carPrice.append(price.text)
             except:
                 pass
+            finally:
+                driver.quit()

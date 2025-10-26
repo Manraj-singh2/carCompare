@@ -9,6 +9,6 @@ def storeData(carName, carKms, carPrice, carYear, carLink):
     df_cars.to_csv(
         'cars.csv', 
         mode='a', 
-        index=False, 
+        index=True, 
         header=not file_exists)
 

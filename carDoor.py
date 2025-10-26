@@ -16,8 +16,12 @@ class carDoor(CarScraper,ABC):
     def getUrl(self,make = None,year=  None):
 
         if make and year:
-            self.url = f'https://www.cardoor.ca/cars?search=&orderby=0&priceType=cash&price%5Bfrom%5D=10749&price%5Bto%5D=142777&makes%5B{make}%5D%5B%5D=&year%5Bfrom%5D=2013&year%5Bto%5D={year}&miles%5Bfrom%5D=0&miles%5Bto%5D=208000'
+            make = make.capitalize()
+            print(make)
+            self.url = f'https://www.cardoor.ca/cars?search=&orderby=0&priceType=cash&price%5Bfrom%5D=11294&price%5Bto%5D=145297&makes%5B{make}%5D%5B%5D=&year%5Bfrom%5D=2015&year%5Bto%5D={year}&miles%5Bfrom%5D=0&miles%5Bto%5D=189000'
+            
         elif make:
+            make = make.capitalize()
             self.url = f'https://www.cardoor.ca/cars?search=&orderby=0&priceType=cash&price%5Bfrom%5D=10749&price%5Bto%5D=142777&makes%5B{make}%5D%5B%5D=&year%5Bfrom%5D=2013&year%5Bto%5D=2025&miles%5Bfrom%5D=0&miles%5Bto%5D=208000'
         elif year:
             self.url = f'https://www.cardoor.ca/cars?search=&orderby=0&priceType=cash&price%5Bfrom%5D=10749&price%5Bto%5D=142777&year%5Bfrom%5D=2013&year%5Bto%5D={year}&miles%5Bfrom%5D=0&miles%5Bto%5D=208000'
@@ -44,7 +48,7 @@ class carDoor(CarScraper,ABC):
 
                 #get the title
                 title = product.find_element(By.XPATH, './/div[contains(@class, "product-title")]')
-                self.carName.append(title.text.split(" ")[1])
+                self.carName.append(" ".join(title.text.split(" ")[1:]))
                 self.carYear.append(title.text.split(" ")[0])
 
                 #getLink of the car
@@ -61,4 +65,5 @@ class carDoor(CarScraper,ABC):
                 self.carPrice.append(price.text)
 
             except:
+                #print("Passing this column No Data in this one")
                 pass

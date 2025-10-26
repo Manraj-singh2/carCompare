@@ -36,10 +36,10 @@ def main():
     sd.storeData(carDoor.carName,carDoor.carKms,carDoor.carLink,carDoor.carPrice,carDoor.carYear) #storing the data in csv
 
     #getting Data from clutch
-    # clutch = cl()
-    # clutch.getUrl(make,year)
-    # clutch.getCars()
-    # print(clutch.carName)
+    clutch = cl()
+    clutch.getUrl(make,year)
+    clutch.getCars()
+    sd.storeData(clutch.carName,clutch.carKms,clutch.carLink,clutch.carPrice,clutch.carYear) 
 
 
 
